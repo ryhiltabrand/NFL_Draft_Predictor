@@ -20,6 +20,6 @@ from app.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('R', ReactView.as_view(), name="yes"),
+    path('R', ReactView.as_view(), name="React"),
     path('N', NFLView.as_view(), name="NFL")
 ]

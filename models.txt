@@ -1,0 +1,114 @@
+Teams (1 model )
+    * name
+    * wins
+    * loses
+    * points for
+    * points against
+    * yards for
+    * yards against
+    * Passing yards
+    * Passing TDs
+    * Passing Interceptions
+    * Rushing attempts
+    * Rushing yards
+    * Defensive Interceptions
+    * Fumbles
+
+Roster (1 model per team)
+    * No
+    * name
+    * position
+    * Games played
+    * Games Started
+    * weight
+    * height
+    * college
+    * Birth date
+    * Years
+
+Offense (1 model )
+    * Team (foriegn key)
+    * No (foriegn key)
+    * Completion
+    * attempts
+    * Passing yards
+    * Passing TD
+    * Interceptions
+    * QB Rating
+    * Rushing attempts
+    * Rushing yards
+    * Rushing TD
+    * Rushing yards per Games
+    * Rushing attempts per Games
+    * Pass targets
+    * Receptions
+    * Receiving yards
+    * Receiving TDs
+    * Catch percentage
+    * Touches
+    * Yard from scrimage
+    * Fumbles
+
+Defense (1 model)
+    * Team (foriegn key)
+    * No (foriegn key)
+    * Interceptions
+    * Interceptions yards
+    * Interceptions TDs
+    * Pass defended
+    * Forced Fumbles
+    * Fumbles recoverd
+    * Fumble yards
+    * Fumble TDs
+    * Sacks
+    * Combined tackles
+    * Solo tackles
+    * Assisted tackles
+    * Tackles for loss
+    * qb Hits 
+    * safteys
+
+Kicking-and-Punting (1 model)
+    * Team (foriegn key)
+    * No (foriegn key)
+    * All Field goals attempted
+    * All Field goals made
+    * 20-29 yards Field goals attempted
+    * 20-29 yards Field goals made
+    * 30-39 yards Field goals attempted
+    * 30-39 yards Field goals made
+    * 40-49 yards Field goals attempted
+    * 40-49 yards Field goals made
+    * 50+ yard Field goals made
+    * longest field goals
+    * field goal percentage
+    * extra points attempted
+    * extra points made
+    * Kick offs
+    * Kick off yards
+    * Kick off touchbacks
+    * Kick off avg
+    * Punts
+    * yards
+    * longest
+    * blocked
+
+College players (1 model)
+    * id
+    * name
+    * first name
+    * last name
+    * school
+    * weight
+    * height
+    * position
+    * Grade
+
+Draft History (1 model)
+    * Years
+    * round
+    * Overall pick
+    * name
+    * Team
+    * position
+    * school
