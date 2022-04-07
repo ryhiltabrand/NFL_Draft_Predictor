@@ -3,10 +3,10 @@ from django.db import models
 # Create your models here.
 
 class Teams(models.Model):
-    acronym = model.CharField(max_length=3, primary_key=True)
-    name = model.CharField(max_length=30)
-    wins = model.IntegerField()
-    loses = model.IntegerField()
+    acronym = models.CharField(max_length=3, primary_key=True)
+    name = models.CharField(max_length=30)
+    wins = models.IntegerField()
+    loses = models.IntegerField()
     pointsFor = models.IntegerField()
     pointsAgainst = models.IntegerField()
     yardsFor = models.IntegerField()
@@ -28,8 +28,8 @@ class Roster(models.Model):
     gamesStarted = models.IntegerField()
     weight = models.IntegerField()
     height = models.CharField(max_length=4)
-    college = model.CharField(max_length=100)
-    birthDate = model.DateField()
+    college = models.CharField(max_length=100)
+    birthDate = models.DateField()
     years = models.IntegerField()
 
 
@@ -102,14 +102,14 @@ class SpecialTeams(models.Model):
     blockedPunts = models.IntegerField(blank=True)
 
 class CollegePlayers(models.Model):
-    playeid = model.IntegerField(primary_key=True)
-    name = model.CharField(max_length=100)
-    firstName = model.CharField(max_length=50)
-    lastName = model.CharField(max_length=50)
-    college = model.CharField(max_length=100)
+    playeid = models.IntegerField(primary_key=True)
+    name = models.CharField(max_length=100)
+    firstName = models.CharField(max_length=50)
+    lastName = models.CharField(max_length=50)
+    college = models.CharField(max_length=100)
     weight = models.IntegerField()
     height = models.IntegerField()
-    position = model.CharField(max_length=5)
+    position = models.CharField(max_length=5)
     athleteGrade = models.DecimalField(blank=True, max_digits=5, decimal_places=2)
     positionGrade = models.DecimalField(blank=True, max_digits=5, decimal_places=2)
 
@@ -117,10 +117,10 @@ class DraftHistory(models.Model):
     year = models.IntegerField()
     round = models.IntegerField()
     pick = models.IntegerField()
-    name = model.CharField(max_length=100)
-    team = model.CharField(max_length=30)
-    position = model.CharField(max_length=10)
-    college = model.CharField(max_length=100)
+    name = models.CharField(max_length=100)
+    team = models.CharField(max_length=30)
+    position = models.CharField(max_length=10)
+    college = models.CharField(max_length=100)
     athleteGrade = models.DecimalField(blank=True, max_digits=5, decimal_places=2)
     positionGrade = models.DecimalField(blank=True, max_digits=5, decimal_places=2)
 
