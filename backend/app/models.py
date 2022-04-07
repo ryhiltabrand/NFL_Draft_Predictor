@@ -1,3 +1,4 @@
+from distutils.file_util import move_file
 from django.db import models
 
 # Create your models here.
@@ -21,7 +22,7 @@ class Teams(models.Model):
 class Roster(models.Model):
     rosterID = models.CharField(max_length=5, primary_key=True)
     no = models.IntegerField()
-    acronym = models.ForeignKey(Teams)
+    acronym = models.ForeignKey(Teams, on_delete=models.PROTECT)
     name = models.CharField(max_length=100)
     position = models.CharField(max_length=2)
     gamesPlayed = models.IntegerField()
@@ -34,8 +35,8 @@ class Roster(models.Model):
 
 
 class Offense(models.Model):
-    acronym = models.ForeignKey(Teams)
-    rosterID = models.ForeignKey(Roster)
+    acronym = models.ForeignKey(Teams, on_delete=models.PROTECT)
+    rosterID = models.ForeignKey(Roster, on_delete=models.PROTECT)
     completions = models.IntegerField(blank=True)
     attempts = models.IntegerField(blank=True)
     passingYards = models.IntegerField(blank=True)
@@ -58,8 +59,8 @@ class Offense(models.Model):
     fumbles = models.IntegerField(blank=True)
 
 class Defense(models.Model):
-    acronym = models.ForeignKey(Teams)
-    no = models.ForeignKey(Roster)
+    acronym = models.ForeignKey(Teams, on_delete=models.PROTECT)
+    rosterID = models.ForeignKey(Roster, on_delete=models.PROTECT)
     interceptions = models.IntegerField(blank=True)
     interceptionsYards = models.IntegerField(blank=True)
     interceptionTDs = models.IntegerField(blank=True)
@@ -77,8 +78,8 @@ class Defense(models.Model):
     safteys = models.IntegerField(blank=True)
 
 class SpecialTeams(models.Model):
-    acronym = models.ForeignKey(Teams)
-    no = models.ForeignKey(Roster)
+    acronym = models.ForeignKey(Teams, on_delete=models.PROTECT)
+    rosterID = models.ForeignKey(Roster, on_delete=models.PROTECT)
     AllFGA = models.IntegerField(blank=True)
     ALlFMG = models.IntegerField(blank=True)
     twentyFGA = models.IntegerField(blank=True)
