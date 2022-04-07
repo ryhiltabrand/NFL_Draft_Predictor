@@ -1,5 +1,6 @@
 Teams (1 model )
     * name
+    * acronym
     * wins
     * loses
     * points for
@@ -15,6 +16,7 @@ Teams (1 model )
     * Fumbles
 
 Roster (1 model per team)
+    * acronym (foriegn key)
     * No
     * name
     * position
@@ -27,7 +29,7 @@ Roster (1 model per team)
     * Years
 
 Offense (1 model )
-    * Team (foriegn key)
+    * acronym (foriegn key)
     * No (foriegn key)
     * Completion
     * attempts
@@ -35,6 +37,7 @@ Offense (1 model )
     * Passing TD
     * Interceptions
     * QB Rating
+    * QBR
     * Rushing attempts
     * Rushing yards
     * Rushing TD
@@ -50,7 +53,7 @@ Offense (1 model )
     * Fumbles
 
 Defense (1 model)
-    * Team (foriegn key)
+    * acronym (foriegn key)
     * No (foriegn key)
     * Interceptions
     * Interceptions yards
