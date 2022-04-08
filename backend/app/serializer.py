@@ -4,7 +4,7 @@ from . models import *
 class TeamSerializer(serializers.ModelSerializer):
     class Meta:
         model = Teams
-        fields = ['acronym', 'name', 'wins', 'loses', 'pointsFor', 'pointsAgainst', 'yardsFor', 'passingYards', 'passingTDs', 'PassingInterceptions', 'rushingAttempts', 'rushingYards', 'defensiveInterceptions', 'forcedFumbles' ]
+        fields = ['acronym', 'name', 'wins', 'loses', 'pointsFor', 'pointsAgainst', 'yardsFor', 'passingYards', 'passingTDs', 'passingInterceptions', 'rushingAttempts', 'rushingYards', 'defensiveInterceptions', 'forcedFumbles' ]
 
 class RosterSerializer(serializers.ModelSerializer):
     class Meta:

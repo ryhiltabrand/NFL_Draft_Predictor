@@ -9,23 +9,23 @@ from rest_framework.response import Response
 # Create your views here.
 
 class ReactView(APIView):
-    serializer_class = ReactSerializer
+    serializer_class = TeamSerializer
     def get(self, request):
-        output = [{"player" : output.player, "team": output.team} for output in React.objects.all()]
+        output = [{"name": output.name} for output in Teams.objects.all()]
         return Response(output)
     def post(self, request):
-        serializer = ReactSerializer(data=request.data)
+        serializer = TeamSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(serializer.data)
     
 class NFLView(APIView):
-    serializer_class = NFLSerializer
+    serializer_class = TeamSerializer
     def get(self, request):
         output = [{ "team": output.team, 'roster': output.roster} for output in NFL.objects.all()]
         return Response(output)
     def post(self, request):
-        serializer = NFLSerializer(data=request.data)
+        serializer = TeamSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response(serializer.data)

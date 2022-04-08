@@ -16,7 +16,7 @@ class Teams(models.Model):
     passingInterceptions = models.IntegerField()
     rushingAttempts = models.IntegerField()
     rushingYards = models.IntegerField()
-    defensiveIntereptions = models.IntegerField()
+    defensiveInterceptions = models.IntegerField()
     forcedFumbles = models.IntegerField()
 
 class Roster(models.Model):

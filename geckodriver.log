@@ -1,0 +1,68 @@
+1649393640136	geckodriver	INFO	Listening on 127.0.0.1:63033
+1649393643208	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--remote-debugging-port" "63034" "-no-remote" "-profile" "C:\\Users\\ryhil\\AppData\\Local\\Temp\\rust_mozprofile8ohVk7"
+1649393661935	geckodriver	INFO	Listening on 127.0.0.1:63199
+1649393665000	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--remote-debugging-port" "63200" "-no-remote" "-profile" "C:\\Users\\ryhil\\AppData\\Local\\Temp\\rust_mozprofileJL5T8j"
+1649393665230	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ryhil\\AppData\\Local\\Temp\\rust_mozprofileJL5T8j\\search.json.mozlz4", (void 0)))
+DevTools listening on ws://localhost:63200/devtools/browser/352f2f7c-2209-4448-91bb-648018b76d6a
+1649393666583	Marionette	INFO	Listening on port 63210
+1649393667081	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1649393812031	Marionette	INFO	Stopped listening on port 63210
+console.warn: TopSitesFeed: Failed to fetch data from Contile server: NetworkError when attempting to fetch resource.
+
+###!!! [Parent][PGPUParent] Error: RunMessage(msgname=PGPU::Msg_ShutdownVR) Channel closing: too late to send/recv, messages will be lost
+
+	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ryhil\\AppData\\Local\\Temp\\rust_mozprofileNGMQeR\\search.json.mozlz4", (void 0)))
+DevTools listening on ws://localhost:57434/devtools/browser/eda9449e-9c95-4994-b39a-d6769945190d
+1649393699215	Marionette	INFO	Listening on port 57443
+1649393699418	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1649393811234	Marionette	INFO	Stopped listening on port 57443
+console.warn: TopSitesFeed: Failed to fetch data from Contile server: NetworkError when attempting to fetch resource.
+
+###!!! [Parent][PGPUParent] Error: RunMessage(msgname=PGPU::Msg_ShutdownVR) Channel closing: too late to send/recv, messages will be lost
+
+	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ryhil\\AppData\\Local\\Temp\\rust_mozprofileT54hMT\\search.json.mozlz4", (void 0)))
+DevTools listening on ws://localhost:52155/devtools/browser/d349b1ee-3104-45f3-a84e-81573d5060b5
+1649393795201	Marionette	INFO	Listening on port 52173
+1649393795449	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+1649393810542	Marionette	INFO	Stopped listening on port 52173
+console.warn: TopSitesFeed: Failed to fetch data from Contile server: NetworkError when attempting to fetch resource.
+1649393822631	geckodriver	INFO	Listening on 127.0.0.1:52298
+1649393825695	mozrunner::runner	INFO	Running command: "C:\\Program Files\\Mozilla Firefox\\firefox.exe" "--marionette" "--remote-debugging-port" "52299" "-no-remote" "-profile" "C:\\Users\\ryhil\\AppData\\Local\\Temp\\rust_mozprofilejUd4n3"
+1649393825986	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ryhil\\AppData\\Local\\Temp\\rust_mozprofilejUd4n3\\search.json.mozlz4", (void 0)))
+DevTools listening on ws://localhost:52299/devtools/browser/e16f1336-183c-4247-9298-d6758aba3e8f
+1649393827652	Marionette	INFO	Listening on port 52307
+1649393827774	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: , line 0: NS_ERROR_NOT_AVAILABLE
+JavaScript error: , line 0: NotFoundError: No such JSWindowActor 'DevToolsFrame'
+1649396216507	Marionette	INFO	Stopped listening on port 52307
+console.warn: TopSitesFeed: Failed to fetch data from Contile server: NetworkError when attempting to fetch resource.
+arionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ryhil\\AppData\\Local\\Temp\\rust_mozprofileVigYpt\\search.json.mozlz4", (void 0)))
+DevTools listening on ws://localhost:52881/devtools/browser/88a7e839-3700-49fd-af56-b703ee7cc45d
+1649394036582	Marionette	INFO	Listening on port 52891
+1649394036903	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: , line 0: NS_ERROR_NOT_AVAILABLE
+1649396202041	Marionette	INFO	Stopped listening on port 52891
+console.warn: TopSitesFeed: Failed to fetch data from Contile server: NetworkError when attempting to fetch resource.
+e" "C:\\Users\\ryhil\\AppData\\Local\\Temp\\rust_mozprofileUVX1En"
+1649394167816	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ryhil\\AppData\\Local\\Temp\\rust_mozprofileUVX1En\\search.json.mozlz4", (void 0)))
+DevTools listening on ws://localhost:49742/devtools/browser/b1bf3d80-4c18-43f2-9962-7b0b6ce92d22
+1649394169367	Marionette	INFO	Listening on port 49749
+1649394169653	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: , line 0: NS_ERROR_NOT_AVAILABLE
+1649396214994	Marionette	INFO	Stopped listening on port 49749
+console.warn: TopSitesFeed: Failed to fetch data from Contile server: NetworkError when attempting to fetch resource.
+e" "C:\\Users\\ryhil\\AppData\\Local\\Temp\\rust_mozprofilesxIWtY"
+1649394197660	Marionette	INFO	Marionette enabled
+console.warn: SearchSettings: "get: No settings file exists, new profile?" (new NotFoundError("Could not open the file at C:\\Users\\ryhil\\AppData\\Local\\Temp\\rust_mozprofilesxIWtY\\search.json.mozlz4", (void 0)))
+DevTools listening on ws://localhost:49881/devtools/browser/d7f2b992-51fd-48e4-98a4-f9e397acd26a
+1649394199186	Marionette	INFO	Listening on port 49896
+1649394199495	RemoteAgent	WARN	TLS certificate errors will be ignored for this session
+JavaScript error: , line 0: NS_ERROR_NOT_AVAILABLE
+1649396215786	Marionette	INFO	Stopped listening on port 49896
+console.warn: TopSitesFeed: Failed to fetch data from Contile server: NetworkError when attempting to fetch resource.
