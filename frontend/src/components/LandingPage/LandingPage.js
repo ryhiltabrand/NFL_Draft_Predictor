@@ -1,6 +1,6 @@
 function LandingPage() {
     return (
-        <div>Hell World!</div>
+        <div>Hello World!</div>
     );
 }
 
