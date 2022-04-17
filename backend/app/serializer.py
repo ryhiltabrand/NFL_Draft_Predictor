@@ -13,14 +13,6 @@ class RosterSerializer(serializers.ModelSerializer):
         model = Roster
         fields = "__all__"
         #fields = ['rosterID', 'no', 'acronym', 'name', 'position', 'gamesPlayed', 'gamesStarted', 'weight', 'height', 'college', 'birthDate', 'years']
-    '''acronym = serializers.SerializerMethodField('get_team_acronym')
-    print(acronym)
-    def get_team_acronym(self, obj):
-        return obj.Teams.acronym'''
-    '''def to_representation(self, instance):
-        rep = super(RosterSerializer, self).to_representation(instance)
-        rep['acronym'] = instance.acronym.name
-        return rep'''
     
 
 class OffenseSerializer(serializers.ModelSerializer):
@@ -50,3 +42,8 @@ class DraftHistorySerializer(serializers.ModelSerializer):
         model = DraftHistory
         fields = "__all__"
         #fields = ['year', 'round', 'pick', 'name', 'team', 'postion', 'college', 'athleteGrade', 'postionGrade']
+
+class RosterStatsSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Roster
+        fields = fields = ['rosterID', 'no', 'acronym', 'name', 'position', 'gamesPlayed', 'gamesStarted', 'weight', 'height', 'college', 'birthDate', 'years', 'offense_set', 'defense_set', 'specialteams_set']

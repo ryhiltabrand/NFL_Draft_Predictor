@@ -36,7 +36,7 @@ class Roster(models.Model):
 
 class Offense(models.Model):
     acronym = models.ForeignKey(Teams, on_delete=models.PROTECT)
-    #rosterID = models.ForeignKey(Roster, on_delete=models.PROTECT)
+    rosterID = models.ForeignKey(Roster, on_delete=models.PROTECT)
     completions = models.IntegerField(null=True)
     attempts = models.IntegerField(null=True)
     passingYards = models.IntegerField(null=True)
@@ -60,7 +60,7 @@ class Offense(models.Model):
 
 class Defense(models.Model):
     acronym = models.ForeignKey(Teams, on_delete=models.PROTECT)
-    #rosterID = models.ForeignKey(Roster, on_delete=models.PROTECT)
+    rosterID = models.ForeignKey(Roster, on_delete=models.PROTECT)
     interceptions = models.IntegerField(null=True)
     interceptionsYards = models.IntegerField(null=True)
     interceptionTDs = models.IntegerField(null=True)
