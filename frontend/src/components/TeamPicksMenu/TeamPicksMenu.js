@@ -7,7 +7,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { ScrollMenu, VisibilityContext } from 'react-horizontal-scrolling-menu';
+import ScrollMenu from 'react-horizontal-scroll-menu';
 import "./TeamPicksMenu.css";
 
 function TeamPick(teamName, pickNumber) {
@@ -48,9 +48,10 @@ function TeamPicksMenu() {
 
     return (
         //<div>Scrollable List</div>
-        <ScrollMenu>
-            {teamPicks}
-        </ScrollMenu>
+        <ScrollMenu
+            data={teamPicks}
+            dragging={false}
+        />
     );
 }
 
