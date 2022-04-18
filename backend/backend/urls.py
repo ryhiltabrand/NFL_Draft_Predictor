@@ -17,9 +17,18 @@ from django.contrib import admin
 from django.urls import path, include
 #from django.conf.urls import url
 from app.views import *
+from rest_framework import routers
+router = routers.DefaultRouter()
+router.register(r'Team', TeamViewSet, 'team')
+router.register(r'Roster', RosterViewSet, 'Roster')
+router.register(r'Offense', OffenseViewSet, 'Offense')
+router.register(r'Defense', DefenseViewSet, 'Defesne')
+router.register(r'ST', SpecialTeamsViewSet, 'SpecialTeams')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('R', ReactView.as_view(), name="React"),
-    path('N', NFLView.as_view(), name="NFL")
+    path('api/',include(router.urls)),
+    path('data/<acronym>/', AllTeamData, name="AllTeamData"),
+    path('pon/<acronym>/', RecommendedPositions, name="Positions of Need"),
 ]
+
