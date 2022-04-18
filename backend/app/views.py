@@ -11,6 +11,9 @@ from django.core import serializers
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Avg
+import pandas as pd
+import os
+from django.conf import settings
 
 # Create your views here.
 class TeamViewSet(viewsets.ModelViewSet):
@@ -54,9 +57,38 @@ def AllTeamData(request, acronym):
     return JsonResponse(output, safe=False)
 
 def RecommendedPositions(request, acronym):
+    #Creating Array of dictionaries of SQLite db
     Team = [{'acronym': output.acronym, 'name': output.name, 'wins': output.wins, 'losses': output.losses, 'pointsFor': output.pointsFor, 'pointsAgainst': output.pointsAgainst, 'yardsFor': output.yardsFor, 'yardsAgainst': output.yardsAgainst,'passingYards': output.passingYards, 'passingTDs': output.passingTDs, 'passingInterceptions': output.passingInterceptions,'sackPercentage': output.sackPercentage,'allowedSacks': output.allowedSacks,'rushingAttempts': output.rushingAttempts, 'rushingYards': output.rushingYards, 'defensiveInterceptions': output.defensiveInterceptions, 'forcedFumbles': output.forcedFumbles, 'defensiveSacks': output.defensiveSacks} for output in Teams.objects.filter(acronym__exact=f'{acronym}')]
     Squad = [{ 'rosterID': output.rosterID,'acronym':output.acronym_id, 'no': output.no, 'name': output.name, 'position': output.position, 'gamesPlayed': output.gamesPlayed, 'gamesStarted': output.gamesStarted, 'weight': output.weight, 'height': output.height, 'college': output.college, 'birthDate': output.birthDate, 'years': output.years} for output in Roster.objects.filter(acronym__exact=f'{acronym}')]
-    
+    OffenseDict = [{'rosterID': output.rosterID_id,'acronym':output.acronym_id,'completions': output.completions, 'attempts': output.attempts, 'passingYards': output.passingYards, 'passingTDs': output.passingTDs, 'interceptions': output.interceptions, 'qbRate': output.qbRate, 'qbr': output.qbr, 'rushingAttempts': output.rushingAttempts, 'rushingYards': output.rushingYards, 'rushingTDs': output.rushingTDs, 'rushingYPG': output.rushingYPG, 'rushingAPG': output.rushingAPG, 'passTargets': output.passTargets, 'receptions': output.receptions, 'receivingYards': output.receivingYards, 'receivingTDs': output.receivingTDs, 'catchPercentage': output.catchPercentage, 'touches': output.touches, 'yardsFromScrimmage': output.yardsFromScrimmage, 'fumbles': output.fumbles} for output in Offense.objects.filter(acronym__exact=f'{acronym}')] 
+    DefenseDict = [{'rosterID': output.rosterID_id,'acronym':output.acronym_id,'interceptions': output.interceptions, 'interceptionsYards': output.interceptionsYards, 'interceptionTDs': output.interceptionTDs, 'passDefended': output.passDefended, 'forcedFumbles': output.forcedFumbles, 'fumblesRecovered': output.fumblesRecovered, 'fumbleYards': output.fumbleYards, 'fumbleTDs': output.fumbleTDs, 'sacks': output.sacks, 'combinedTackles': output.combinedTackles, 'soloTackles': output.soloTackles, 'assistedTackles': output.assistedTackles, 'tacklesForLoss': output.tacklesForLoss, 'qbHits': output.qbHits, 'safeties': output.safeties} for output in Defense.objects.filter(acronym__exact=f'{acronym}')]
+
+    #Creating DFs from above arrays
+    OffenseDF = pd.DataFrame(OffenseDict)
+    DefenseDF = pd.DataFrame(DefenseDict)
+    RosterDF = pd.DataFrame(Squad)
+    file = os.path.join(settings.BASE_DIR, 'PositionalImportance.csv')
+    PositionalImportanceDF = pd.read_csv(file)
+
+    temp = RosterDF.loc[RosterDF['position']=='QB']
+    Starting_QB=temp.loc[temp['gamesStarted']==temp['gamesStarted'].max()].iloc[0]['rosterID']
+    temp = RosterDF.loc[RosterDF['position']=='RB']
+    Starting_RB=temp.loc[temp['gamesStarted']==temp['gamesStarted'].max()].iloc[0]['rosterID']
+    temp = RosterDF.loc[RosterDF['position']=='WR']
+    Starting_WR=temp.nlargest(n=3, columns=['gamesStarted'])
+    temp = RosterDF.loc[RosterDF['position']=='TE']
+    Starting_TE=temp.nlargest(n=1, columns=['gamesStarted']).iloc[0]['rosterID']
+    temp = RosterDF.loc[(RosterDF['position']=='T') | (RosterDF['position']=='OT') | (RosterDF['position']=='OL') | (RosterDF['position']=='OG') | (RosterDF['position']=='G')| (RosterDF['position']=='C')]
+    Starting_OT=temp.nlargest(n=5, columns=['gamesStarted'])
+    #temp = RosterDF.loc[(RosterDF['position']=='T') | (RosterDF['position']=='OT')]
+    #Starting_OT=temp.nlargest(n=2, columns=['gamesStarted'])
+    print(Starting_OT)
+    #print(Starting_QB, Starting_RB, Starting_WR.iloc[0]['rosterID'], Starting_WR.iloc[1]['rosterID'], Starting_WR.iloc[2]['rosterID'], Starting_TE)
+    #print(PositionalImportanceDF)
+    #print(OffenseDF)
+    #print(DefenseDF)
+
+    #Getting LEague avgs
     avgWins = Teams.objects.all().aggregate(Avg('wins'))['wins__avg']
     avgLosses = Teams.objects.all().aggregate(Avg('losses'))['losses__avg']
     avgPointsFor = Teams.objects.all().aggregate(Avg('pointsFor'))['pointsFor__avg']
@@ -71,7 +103,7 @@ def RecommendedPositions(request, acronym):
     avgRushingY = Teams.objects.all().aggregate(Avg('rushingYards'))['rushingYards__avg']
     avgDInterceptions = Teams.objects.all().aggregate(Avg('defensiveInterceptions'))['defensiveInterceptions__avg']
     forcedFumbles = Teams.objects.all().aggregate(Avg('forcedFumbles'))['forcedFumbles__avg']
-    print("|", avgWins, "|",avgLosses, "|",avgPointsFor, "|",avgPointsAgainst,"|", avgYardsFor,"|",avgYardsAgainst, "|", avgPassingYards, "|",avgPassingTDs,"|", avgOInterceptions,"|",avgAllowedSacks,"|", avgRushingA, "|",avgRushingY,"|", avgDInterceptions,"|", forcedFumbles,"|")
+    #print("|", avgWins, "|",avgLosses, "|",avgPointsFor, "|",avgPointsAgainst,"|", avgYardsFor,"|",avgYardsAgainst, "|", avgPassingYards, "|",avgPassingTDs,"|", avgOInterceptions,"|",avgAllowedSacks,"|", avgRushingA, "|",avgRushingY,"|", avgDInterceptions,"|", forcedFumbles,"|")
     DefenseScore = 0
     OffenseScore = 0
     
@@ -85,7 +117,7 @@ def RecommendedPositions(request, acronym):
         DefenseScore = DefenseScore - 1
     
     positions = ["QB", "RB", "WR", "TE", "OT", "IOL", "Edge", "DL", "LB", "CB", "S"]
-    pon = ["yes"]
+    pon = {}
     '''if DefenseScore < 0 and OffenseScore < 0:
         pon=positions
     elif DefenseScore < 0 and OffenseScore>= 0:
@@ -95,11 +127,15 @@ def RecommendedPositions(request, acronym):
     else:
         pon = positions'''
     
-    if Team[0]["passingYards"] < avgPassingYards and Team[0]["PassingTDs"] < avgPassingTDs and Team[0]["passingInterceptions"] < avgOInterceptions:
-        pon = pon.append("QB")
     
-    #OffenseDict = [{'rosterID': output.rosterID_id,'acronym':output.acronym_id,'completions': output.completions, 'attempts': output.attempts, 'passingYards': output.passingYards, 'passingTDs': output.passingTDs, 'interceptions': output.interceptions, 'qbRate': output.qbRate, 'qbr': output.qbr, 'rushingAttempts': output.rushingAttempts, 'rushingYards': output.rushingYards, 'rushingTDs': output.rushingTDs, 'rushingYPG': output.rushingYPG, 'rushingAPG': output.rushingAPG, 'passTargets': output.passTargets, 'receptions': output.receptions, 'receivingYards': output.receivingYards, 'receivingTDs': output.receivingTDs, 'catchPercentage': output.catchPercentage, 'touches': output.touches, 'yardsFromScrimmage': output.yardsFromScrimmage, 'fumbles': output.fumbles} for output in Offense.objects.filter(acronym__exact=f'{acronym}')] 
-    #DefenseDict = [{'rosterID': output.rosterID_id,'acronym':output.acronym_id,'interceptions': output.interceptions, 'interceptionsYards': output.interceptionsYards, 'interceptionTDs': output.interceptionTDs, 'passDefended': output.passDefended, 'forcedFumbles': output.forcedFumbles, 'fumblesRecovered': output.fumblesRecovered, 'fumbleYards': output.fumbleYards, 'fumbleTDs': output.fumbleTDs, 'sacks': output.sacks, 'combinedTackles': output.combinedTackles, 'soloTackles': output.soloTackles, 'assistedTackles': output.assistedTackles, 'tacklesForLoss': output.tacklesForLoss, 'qbHits': output.qbHits, 'safeties': output.safeties} for output in Defense.objects.filter(acronym__exact=f'{acronym}')]
+    pon["QB"] = (Team[0]["passingInterceptions"]+Team[0]["passingYards"]+Team[0]["passingTDs"])/(avgPassingTDs+avgPassingYards+avgOInterceptions)
+    print(pon["QB"])
+    
+    #pon["WR"] = 
+    
+    #pon["RB"] = (Team[0]())/(avgRushingTD+(avgRushingY/avgRushingA))
+   
+    DefenseDict = [{'rosterID': output.rosterID_id,'acronym':output.acronym_id,'interceptions': output.interceptions, 'interceptionsYards': output.interceptionsYards, 'interceptionTDs': output.interceptionTDs, 'passDefended': output.passDefended, 'forcedFumbles': output.forcedFumbles, 'fumblesRecovered': output.fumblesRecovered, 'fumbleYards': output.fumbleYards, 'fumbleTDs': output.fumbleTDs, 'sacks': output.sacks, 'combinedTackles': output.combinedTackles, 'soloTackles': output.soloTackles, 'assistedTackles': output.assistedTackles, 'tacklesForLoss': output.tacklesForLoss, 'qbHits': output.qbHits, 'safeties': output.safeties} for output in Defense.objects.filter(acronym__exact=f'{acronym}')]
     #SpecialTeamsDict = [{'rosterID': output.rosterID_id,'acronym':output.acronym_id,'AllFGA': output.AllFGA, 'AllFGM': output.AllFGM, 'twentyFGA': output.twentyFGA, 'twentyFGM': output.twentyFGM, 'thirtyFGA': output.thirtyFGA, 'thirtyFGM': output.thirtyFGM, 'fortyFGA': output.fortyFGA, 'fortyFGM': output.fortyFGM, 'fiftyPlusFGA': output.fiftyPlusFGA, 'fiftyPlusFGM': output.fiftyPlusFGM, 'longestFG': output.longestFG, 'FGPercentage': output.FGPercentage, 'extraPointsAttempted': output.extraPointsAttempted, 'extraPointsMade': output.extraPointsMade, 'kickOffs': output.kickOffs,'kickOffYards': output.kickOffYards , 'kickOffAvg': output.kickOffAvg, 'punts': output.punts, 'puntYards': output.puntYards, 'longestPunt': output.longestPunt, 'blockedPunts': output.blockedPunts } for output in SpecialTeams.objects.filter(acronym__exact=f'{acronym}')]
     
     output = [{'Team': Team, "Positions of Need": pon}]
