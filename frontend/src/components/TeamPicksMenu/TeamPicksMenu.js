@@ -33,9 +33,7 @@ function TeamPicksMenu() {
     const [teams, setTeams] = useState([]);
 
     useEffect(() => {
-        axios.get("http://localhost:8000/api/Team/?format=json").then((res) => {
-            setTeams(res.data)
-        });
+        setTeams(require("../../data/draft.json"));
     }, []);
 
     var teamPicks = teams.map((team, pickNumber) =>
