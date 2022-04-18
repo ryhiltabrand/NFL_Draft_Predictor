@@ -11,13 +11,18 @@ class Teams(models.Model):
     pointsFor = models.IntegerField()
     pointsAgainst = models.IntegerField()
     yardsFor = models.IntegerField()
+    yardsAgainst = models.IntegerField()
     passingYards = models.IntegerField()
     passingTDs= models.IntegerField()
     passingInterceptions = models.IntegerField()
+    sackPercentage = models.DecimalField(null=True, max_digits=5, decimal_places=2)
+    allowedSacks = models.IntegerField()
     rushingAttempts = models.IntegerField()
     rushingYards = models.IntegerField()
     defensiveInterceptions = models.IntegerField()
+    defensiveSacks = models.IntegerField()
     forcedFumbles = models.IntegerField()
+
 
 class Roster(models.Model):
     rosterID = models.CharField(max_length=30, primary_key=True)
@@ -36,7 +41,7 @@ class Roster(models.Model):
 
 class Offense(models.Model):
     acronym = models.ForeignKey(Teams, on_delete=models.PROTECT)
-    #rosterID = models.ForeignKey(Roster, on_delete=models.PROTECT)
+    rosterID = models.ForeignKey(Roster, on_delete=models.PROTECT)
     completions = models.IntegerField(null=True)
     attempts = models.IntegerField(null=True)
     passingYards = models.IntegerField(null=True)
@@ -60,7 +65,7 @@ class Offense(models.Model):
 
 class Defense(models.Model):
     acronym = models.ForeignKey(Teams, on_delete=models.PROTECT)
-    #rosterID = models.ForeignKey(Roster, on_delete=models.PROTECT)
+    rosterID = models.ForeignKey(Roster, on_delete=models.PROTECT)
     interceptions = models.IntegerField(null=True)
     interceptionsYards = models.IntegerField(null=True)
     interceptionTDs = models.IntegerField(null=True)

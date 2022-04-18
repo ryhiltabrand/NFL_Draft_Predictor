@@ -28,11 +28,7 @@ router.register(r'ST', SpecialTeamsViewSet, 'SpecialTeams')
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/',include(router.urls)),
-    #path('Team/', TeamView.as_view(), name="Team"),
-    #path('Roster/', RosterView.as_view(), name="Roster"),
-    #path('Offense/', OffenseView.as_view(), name="Offense"),
-    #path('Defense/', DefenseView.as_view(), name="Defense"),
-    #path('ST/', SpecialTeamsView.as_view(), name="SpecialTeams"),
-    #path('', include(router.urls)),
+    path('data/<acronym>/', AllTeamData, name="AllTeamData"),
+    path('pon/<acronym>/', RecommendedPositions, name="Positions of Need"),
 ]
 
