@@ -11,13 +11,18 @@ class Teams(models.Model):
     pointsFor = models.IntegerField()
     pointsAgainst = models.IntegerField()
     yardsFor = models.IntegerField()
+    yardsAgainst = models.IntegerField()
     passingYards = models.IntegerField()
     passingTDs= models.IntegerField()
     passingInterceptions = models.IntegerField()
+    sackPercentage = models.DecimalField(null=True, max_digits=5, decimal_places=2)
+    allowedSacks = models.IntegerField()
     rushingAttempts = models.IntegerField()
     rushingYards = models.IntegerField()
     defensiveInterceptions = models.IntegerField()
+    defensiveSacks = models.IntegerField()
     forcedFumbles = models.IntegerField()
+
 
 class Roster(models.Model):
     rosterID = models.CharField(max_length=30, primary_key=True)
