@@ -1,4 +1,3 @@
-import * as React from 'react';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import { ImageListItemBar, Typography } from '@mui/material';
@@ -6,6 +5,9 @@ import Card from '@mui/material/Card';
 import CardActionArea from '@mui/material/CardActionArea';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { ScrollMenu, VisibilityContext } from 'react-horizontal-scrolling-menu';
 
 function TeamPick(teamName, pickNumber) {
 
@@ -27,21 +29,27 @@ function TeamPick(teamName, pickNumber) {
 
 function TeamPicksMenu() {
 
-    var teams = ["Jags", "Lions", "Seahawks", "Bills"];
+    const [teams, setTeams] = useState([]);
 
-    var teamPicks = teams.map((teamName, pickNumber) =>
+    useEffect(() => {
+        axios.get("http://localhost:8000/api/Team/?format=json").then((res) => {
+            setTeams(res.data)
+        });
+    }, []);
+
+    var teamPicks = teams.map((team, pickNumber) =>
         <div style={{ display: "inline-block" }}>
-            {TeamPick(teamName, pickNumber)}
+            {TeamPick(team.name, pickNumber + 1)}
         </div>
     );
 
-    console.log(teamPicks)
+    // console.log(teamPicks)
 
     return (
         //<div>Scrollable List</div>
-        <div>
+        <ScrollMenu>
             {teamPicks}
-        </div>
+        </ScrollMenu>
     );
 }
 
