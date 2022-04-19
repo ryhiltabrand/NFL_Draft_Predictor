@@ -213,16 +213,75 @@ def RecommendedPositions(request, acronym):
                 + ((decimal.Decimal(Team[0]["allowedSacks"]-decimal.Decimal(avgAllowedSacks))/decimal.Decimal(avgAllowedSacks))*(25)) \
                 + (decimal.Decimal(Team[0]["sackPercentage"])/decimal.Decimal(6))*(25)
 
-    pon["EDGE"] = 1
+    pon["EDGE1"] = (decimal.Decimal(DefenseDF.loc[DefenseDF['rosterID']==Starters['Edge'][0]].iloc[0]['sacks']/8)*40) \
+                + (decimal.Decimal(DefenseDF.loc[DefenseDF['rosterID']==Starters['Edge'][0]].iloc[0]['soloTackles']/30)*10) \
+                + (decimal.Decimal(DefenseDF.loc[DefenseDF['rosterID']==Starters['Edge'][0]].iloc[0]['assistedTackles']/10)*5) \
+                + (decimal.Decimal(DefenseDF.loc[DefenseDF['rosterID']==Starters['Edge'][0]].iloc[0]['tacklesForLoss']/10)*25) \
+                + (decimal.Decimal(DefenseDF.loc[DefenseDF['rosterID']==Starters['Edge'][0]].iloc[0]['qbHits']/6)*20) 
+    
+    pon["EDGE2"] = (decimal.Decimal(DefenseDF.loc[DefenseDF['rosterID']==Starters['Edge'][1]].iloc[0]['sacks']/8)*40) \
+                + (decimal.Decimal(DefenseDF.loc[DefenseDF['rosterID']==Starters['Edge'][1]].iloc[0]['soloTackles']/30)*10) \
+                + (decimal.Decimal(DefenseDF.loc[DefenseDF['rosterID']==Starters['Edge'][1]].iloc[0]['assistedTackles']/10)*5) \
+                + (decimal.Decimal(DefenseDF.loc[DefenseDF['rosterID']==Starters['Edge'][1]].iloc[0]['tacklesForLoss']/10)*25) \
+                + (decimal.Decimal(DefenseDF.loc[DefenseDF['rosterID']==Starters['Edge'][1]].iloc[0]['qbHits']/6)*20) 
+    
+    pon["DT1"] = (decimal.Decimal(DefenseDF.loc[DefenseDF['rosterID']==Starters['DT'][0]].iloc[0]['sacks']/6)*20) \
+                + (decimal.Decimal(DefenseDF.loc[DefenseDF['rosterID']==Starters['DT'][0]].iloc[0]['soloTackles']/30)*25) \
+                + (decimal.Decimal(DefenseDF.loc[DefenseDF['rosterID']==Starters['DT'][0]].iloc[0]['assistedTackles']/20)*15) \
+                + (decimal.Decimal(DefenseDF.loc[DefenseDF['rosterID']==Starters['DT'][0]].iloc[0]['tacklesForLoss']/10)*30) \
+                + (decimal.Decimal(DefenseDF.loc[DefenseDF['rosterID']==Starters['DT'][0]].iloc[0]['qbHits']/6)*10) 
+    
+    pon["DT2"] = (decimal.Decimal(DefenseDF.loc[DefenseDF['rosterID']==Starters['DT'][1]].iloc[0]['sacks']/6)*20) \
+                + (decimal.Decimal(DefenseDF.loc[DefenseDF['rosterID']==Starters['DT'][1]].iloc[0]['soloTackles']/30)*25) \
+                + (decimal.Decimal(DefenseDF.loc[DefenseDF['rosterID']==Starters['DT'][1]].iloc[0]['assistedTackles']/20)*15) \
+                + (decimal.Decimal(DefenseDF.loc[DefenseDF['rosterID']==Starters['DT'][1]].iloc[0]['tacklesForLoss']/10)*30) \
+                + (decimal.Decimal(DefenseDF.loc[DefenseDF['rosterID']==Starters['DT'][1]].iloc[0]['qbHits']/6)*10) 
+    
 
-    pon["DT"] = 1
+    pon["LB1"] =(decimal.Decimal(DefenseDF.loc[DefenseDF['rosterID']==Starters['LB'][0]].iloc[0]['sacks']/3)*10) \
+                + (decimal.Decimal(DefenseDF.loc[DefenseDF['rosterID']==Starters['LB'][0]].iloc[0]['soloTackles']/60)*30) \
+                + (decimal.Decimal(DefenseDF.loc[DefenseDF['rosterID']==Starters['LB'][0]].iloc[0]['assistedTackles']/30)*15) \
+                + (decimal.Decimal(DefenseDF.loc[DefenseDF['rosterID']==Starters['LB'][0]].iloc[0]['tacklesForLoss']/10)*5) \
+                + (decimal.Decimal(DefenseDF.loc[DefenseDF['rosterID']==Starters['LB'][0]].iloc[0]['qbHits']/6)*10) \
+                + (decimal.Decimal(DefenseDF.loc[DefenseDF['rosterID']==Starters['LB'][0]].iloc[0]['forcedFumbles']/3)*5) \
+                + (decimal.Decimal(DefenseDF.loc[DefenseDF['rosterID']==Starters['LB'][0]].iloc[0]['interceptions']/3)*5) \
+                + (decimal.Decimal(DefenseDF.loc[DefenseDF['rosterID']==Starters['LB'][0]].iloc[0]['qbHits']/5)*5) \
+                + (decimal.Decimal(DefenseDF.loc[DefenseDF['rosterID']==Starters['LB'][0]].iloc[0]['passDefended']/6)*20) 
+    
+    pon["LB2"] =(decimal.Decimal(DefenseDF.loc[DefenseDF['rosterID']==Starters['LB'][1]].iloc[0]['sacks']/3)*10) \
+                + (decimal.Decimal(DefenseDF.loc[DefenseDF['rosterID']==Starters['LB'][1]].iloc[0]['soloTackles']/60)*30) \
+                + (decimal.Decimal(DefenseDF.loc[DefenseDF['rosterID']==Starters['LB'][1]].iloc[0]['assistedTackles']/30)*15) \
+                + (decimal.Decimal(DefenseDF.loc[DefenseDF['rosterID']==Starters['LB'][1]].iloc[0]['tacklesForLoss']/10)*5) \
+                + (decimal.Decimal(DefenseDF.loc[DefenseDF['rosterID']==Starters['LB'][1]].iloc[0]['qbHits']/6)*10) \
+                + (decimal.Decimal(DefenseDF.loc[DefenseDF['rosterID']==Starters['LB'][1]].iloc[0]['forcedFumbles']/3)*5) \
+                + (decimal.Decimal(DefenseDF.loc[DefenseDF['rosterID']==Starters['LB'][1]].iloc[0]['interceptions']/3)*5) \
+                + (decimal.Decimal(DefenseDF.loc[DefenseDF['rosterID']==Starters['LB'][1]].iloc[0]['qbHits']/5)*5)  \
+                + (decimal.Decimal(DefenseDF.loc[DefenseDF['rosterID']==Starters['LB'][1]].iloc[0]['passDefended']/6)*20) 
 
-    pon["LB"] = 1
+    pon["CB1"] = (decimal.Decimal(DefenseDF.loc[DefenseDF['rosterID']==Starters['CB'][0]].iloc[0]['passDefended']/10)*60) \
+                + (decimal.Decimal(DefenseDF.loc[DefenseDF['rosterID']==Starters['CB'][0]].iloc[0]['interceptions']/3)*30) \
+                + (decimal.Decimal(DefenseDF.loc[DefenseDF['rosterID']==Starters['CB'][0]].iloc[0]['combinedTackles']/60)*10) \
 
-    pon["CB"] = 1
+    pon["CB2"] = (decimal.Decimal(DefenseDF.loc[DefenseDF['rosterID']==Starters['CB'][1]].iloc[0]['passDefended']/10)*60) \
+                + (decimal.Decimal(DefenseDF.loc[DefenseDF['rosterID']==Starters['CB'][1]].iloc[0]['interceptions']/3)*30) \
+                + (decimal.Decimal(DefenseDF.loc[DefenseDF['rosterID']==Starters['CB'][1]].iloc[0]['combinedTackles']/60)*10) \
 
-    pon["S"] = 1
- 
+    pon["CB3"] = (decimal.Decimal(DefenseDF.loc[DefenseDF['rosterID']==Starters['CB'][2]].iloc[0]['passDefended']/10)*60) \
+                + (decimal.Decimal(DefenseDF.loc[DefenseDF['rosterID']==Starters['CB'][2]].iloc[0]['interceptions']/3)*30) \
+                + (decimal.Decimal(DefenseDF.loc[DefenseDF['rosterID']==Starters['CB'][2]].iloc[0]['combinedTackles']/60)*10) \
+
+    pon["S1"] = (decimal.Decimal(DefenseDF.loc[DefenseDF['rosterID']==Starters['S'][0]].iloc[0]['passDefended']/6)*25) \
+                + (decimal.Decimal(DefenseDF.loc[DefenseDF['rosterID']==Starters['S'][0]].iloc[0]['interceptions']/3)*15) \
+                + (decimal.Decimal(DefenseDF.loc[DefenseDF['rosterID']==Starters['S'][0]].iloc[0]['soloTackles']/50)*35) \
+                + (decimal.Decimal(DefenseDF.loc[DefenseDF['rosterID']==Starters['S'][0]].iloc[0]['assistedTackles']/25)*15) \
+                + (decimal.Decimal(DefenseDF.loc[DefenseDF['rosterID']==Starters['S'][0]].iloc[0]['tacklesForLoss']/3)*10) 
+    
+    pon["S2"] = (decimal.Decimal(DefenseDF.loc[DefenseDF['rosterID']==Starters['S'][1]].iloc[0]['passDefended']/6)*25) \
+                + (decimal.Decimal(DefenseDF.loc[DefenseDF['rosterID']==Starters['S'][1]].iloc[0]['interceptions']/3)*15) \
+                + (decimal.Decimal(DefenseDF.loc[DefenseDF['rosterID']==Starters['S'][1]].iloc[0]['soloTackles']/50)*35) \
+                + (decimal.Decimal(DefenseDF.loc[DefenseDF['rosterID']==Starters['S'][1]].iloc[0]['assistedTackles']/25)*15) \
+                + (decimal.Decimal(DefenseDF.loc[DefenseDF['rosterID']==Starters['S'][1]].iloc[0]['tacklesForLoss']/3)*10) 
+   
     #(Team[0]["passingInterceptions"]+Team[0]["passingYards"]+Team[0]["passingTDs"])/(avgPassingTDs+avgPassingYards+avgOInterceptions)
     print(pon)
     
@@ -233,7 +292,7 @@ def RecommendedPositions(request, acronym):
     DefenseDict = [{'rosterID': output.rosterID_id,'acronym':output.acronym_id,'interceptions': output.interceptions, 'interceptionsYards': output.interceptionsYards, 'interceptionTDs': output.interceptionTDs, 'passDefended': output.passDefended, 'forcedFumbles': output.forcedFumbles, 'fumblesRecovered': output.fumblesRecovered, 'fumbleYards': output.fumbleYards, 'fumbleTDs': output.fumbleTDs, 'sacks': output.sacks, 'combinedTackles': output.combinedTackles, 'soloTackles': output.soloTackles, 'assistedTackles': output.assistedTackles, 'tacklesForLoss': output.tacklesForLoss, 'qbHits': output.qbHits, 'safeties': output.safeties} for output in Defense.objects.filter(acronym__exact=f'{acronym}')]
     #SpecialTeamsDict = [{'rosterID': output.rosterID_id,'acronym':output.acronym_id,'AllFGA': output.AllFGA, 'AllFGM': output.AllFGM, 'twentyFGA': output.twentyFGA, 'twentyFGM': output.twentyFGM, 'thirtyFGA': output.thirtyFGA, 'thirtyFGM': output.thirtyFGM, 'fortyFGA': output.fortyFGA, 'fortyFGM': output.fortyFGM, 'fiftyPlusFGA': output.fiftyPlusFGA, 'fiftyPlusFGM': output.fiftyPlusFGM, 'longestFG': output.longestFG, 'FGPercentage': output.FGPercentage, 'extraPointsAttempted': output.extraPointsAttempted, 'extraPointsMade': output.extraPointsMade, 'kickOffs': output.kickOffs,'kickOffYards': output.kickOffYards , 'kickOffAvg': output.kickOffAvg, 'punts': output.punts, 'puntYards': output.puntYards, 'longestPunt': output.longestPunt, 'blockedPunts': output.blockedPunts } for output in SpecialTeams.objects.filter(acronym__exact=f'{acronym}')]
     
-    output = [{"Positions of Need": pon}]
+    output = [{"Starters": Starters,"Positions of Need": pon}]
 
     return JsonResponse(output, safe=False)
 
