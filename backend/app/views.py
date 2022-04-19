@@ -14,6 +14,7 @@ from django.db.models import Avg
 import pandas as pd
 import os
 from django.conf import settings
+import decimal
 
 # Create your views here.
 class TeamViewSet(viewsets.ModelViewSet):
@@ -71,20 +72,41 @@ def RecommendedPositions(request, acronym):
     PositionalImportanceDF = pd.read_csv(file)
 
     temp = RosterDF.loc[RosterDF['position']=='QB']
-    Starting_QB=temp.loc[temp['gamesStarted']==temp['gamesStarted'].max()].iloc[0]['rosterID']
+    Starting_QB=[temp.loc[temp['gamesStarted']==temp['gamesStarted'].max()].iloc[0]['rosterID']]
     temp = RosterDF.loc[RosterDF['position']=='RB']
-    Starting_RB=temp.loc[temp['gamesStarted']==temp['gamesStarted'].max()].iloc[0]['rosterID']
+    Starting_RB=[temp.loc[temp['gamesStarted']==temp['gamesStarted'].max()].iloc[0]['rosterID']]
     temp = RosterDF.loc[RosterDF['position']=='WR']
-    Starting_WR=temp.nlargest(n=3, columns=['gamesStarted'])
+    Starting_WR_DF=temp.nlargest(n=3, columns=['gamesStarted'])
+    Starting_WR=[Starting_WR_DF.iloc[0]['rosterID'],Starting_WR_DF.iloc[1]['rosterID'],Starting_WR_DF.iloc[2]['rosterID']]
     temp = RosterDF.loc[RosterDF['position']=='TE']
-    Starting_TE=temp.nlargest(n=1, columns=['gamesStarted']).iloc[0]['rosterID']
+    Starting_TE=[temp.nlargest(n=1, columns=['gamesStarted']).iloc[0]['rosterID']]
     temp = RosterDF.loc[(RosterDF['position']=='T') | (RosterDF['position']=='OT') | (RosterDF['position']=='OL') | (RosterDF['position']=='OG') | (RosterDF['position']=='G')| (RosterDF['position']=='C')]
-    Starting_OT=temp.nlargest(n=5, columns=['gamesStarted'])
-    #temp = RosterDF.loc[(RosterDF['position']=='T') | (RosterDF['position']=='OT')]
-    #Starting_OT=temp.nlargest(n=2, columns=['gamesStarted'])
-    print(Starting_OT)
-    #print(Starting_QB, Starting_RB, Starting_WR.iloc[0]['rosterID'], Starting_WR.iloc[1]['rosterID'], Starting_WR.iloc[2]['rosterID'], Starting_TE)
-    #print(PositionalImportanceDF)
+    Starting_OL_DF=temp.nlargest(n=5, columns=['gamesStarted'])
+    Starting_OL=[Starting_OL_DF.iloc[0]['rosterID'],Starting_OL_DF.iloc[1]['rosterID'],Starting_OL_DF.iloc[2]['rosterID'],Starting_OL_DF.iloc[3]['rosterID'],Starting_OL_DF.iloc[4]['rosterID']]
+    temp = RosterDF.loc[(RosterDF['position']=='DL') | (RosterDF['position']=='EDGE') | (RosterDF['position']=='DE')]
+    Starting_Edge_DF=temp.nlargest(n=2, columns=['gamesStarted'])
+    Starting_Edge=[Starting_Edge_DF.iloc[0]['rosterID'],Starting_Edge_DF.iloc[1]['rosterID']]
+    temp = RosterDF.loc[(RosterDF['position']=='DT')|(RosterDF['position']=='NT')]
+    Starting_DT_DF=temp.nlargest(n=2, columns=['gamesStarted'])
+    Starting_DT=[Starting_DT_DF.iloc[0]['rosterID'],Starting_DT_DF.iloc[1]['rosterID']]
+    temp = RosterDF.loc[(RosterDF['position']=='S') | (RosterDF['position']=='SS') | (RosterDF['position']=='FS')]
+    Starting_S_DF=temp.nlargest(n=2, columns=['gamesStarted'])
+    Starting_S=[Starting_S_DF.iloc[0]['rosterID'],Starting_S_DF.iloc[1]['rosterID']]
+    temp = RosterDF.loc[(RosterDF['position']=='OLB') | (RosterDF['position']=='LB') | (RosterDF['position']=='ILB')| (RosterDF['position']=='LILB')| (RosterDF['position']=='RILB')| (RosterDF['position']=='ROLB')| (RosterDF['position']=='LOLB')]
+    Starting_LB_DF=temp.nlargest(n=2, columns=['gamesStarted'])
+    Starting_LB=[Starting_LB_DF.iloc[0]['rosterID'],Starting_LB_DF.iloc[1]['rosterID']]
+    temp = RosterDF.loc[(RosterDF['position']=='CB')]
+    Starting_CB_DF=temp.nlargest(n=3, columns=['gamesStarted'])
+    Starting_CB=[Starting_CB_DF.iloc[0]['rosterID'],Starting_CB_DF.iloc[1]['rosterID'],Starting_CB_DF.iloc[2]['rosterID']]
+    temp = RosterDF.loc[(RosterDF['position']=='K')]
+    Starting_K=[temp.loc[temp['gamesStarted']==temp['gamesStarted'].max()].iloc[0]['rosterID']]
+    temp = RosterDF.loc[(RosterDF['position']=='P')]
+    Starting_P=[temp.loc[temp['gamesStarted']==temp['gamesStarted'].max()].iloc[0]['rosterID']]
+    #print(Starting_Edge_DF)
+    Starters={"QB": Starting_QB,"RB": Starting_RB,"WR": Starting_WR,"TE": Starting_TE,"OL": Starting_OL,"Edge": Starting_Edge,"DT": Starting_DT,"LB": Starting_LB,"CB": Starting_CB,"S": Starting_S,"K": Starting_K,"P": Starting_P}
+    
+    print(Starters)
+
     #print(OffenseDF)
     #print(DefenseDF)
 
@@ -127,9 +149,82 @@ def RecommendedPositions(request, acronym):
     else:
         pon = positions'''
     
+    """
+    Good Stats ever per metric
+    QBR:105.8
+    Rating:104
+    Yards: 3500
+    TDs: 20
+    Int: 12
+    RushingYards: 
+    """
+
+    #Worse then 58 is pon
+    pon["QB"] = ((decimal.Decimal(OffenseDF.loc[OffenseDF['rosterID']==Starters['QB'][0]].iloc[0]['qbr'])/105)*(35)) \
+                + ((decimal.Decimal(OffenseDF.loc[OffenseDF['rosterID']==Starters['QB'][0]].iloc[0]['qbRate'])/104)*(35)) \
+                + ((decimal.Decimal(OffenseDF.loc[OffenseDF['rosterID']==Starters['QB'][0]].iloc[0]['passingYards']+OffenseDF.loc[OffenseDF['rosterID']==Starters['QB'][0]].iloc[0]['rushingYards'])/5000)*(10)) \
+                + ((decimal.Decimal(OffenseDF.loc[OffenseDF['rosterID']==Starters['QB'][0]].iloc[0]['passingTDs']+OffenseDF.loc[OffenseDF['rosterID']==Starters['QB'][0]].iloc[0]['rushingTDs'])/40)*(10)) \
+                + ((decimal.Decimal(OffenseDF.loc[OffenseDF['rosterID']==Starters['QB'][0]].iloc[0]['interceptions']-12)/12)*(10))
+
+    #Worse then 50 is pon
+    pon['RB'] = ((((decimal.Decimal(OffenseDF.loc[OffenseDF['rosterID']==Starters['RB'][0]].iloc[0]['rushingYards']))/(decimal.Decimal(OffenseDF.loc[OffenseDF['rosterID']==Starters['RB'][0]].iloc[0]['rushingAttempts'])))/decimal.Decimal(5.5))*(30)) \
+                + ((decimal.Decimal(OffenseDF.loc[OffenseDF['rosterID']==Starters['RB'][0]].iloc[0]['rushingTDs'])/18)*(30)) \
+                + ((decimal.Decimal(OffenseDF.loc[OffenseDF['rosterID']==Starters['RB'][0]].iloc[0]['receivingYards'])/647)*(25)) \
+                + ((decimal.Decimal(OffenseDF.loc[OffenseDF['rosterID']==Starters['RB'][0]].iloc[0]['receivingTDs'])/8)*(15)) \
     
-    pon["QB"] = (Team[0]["passingInterceptions"]+Team[0]["passingYards"]+Team[0]["passingTDs"])/(avgPassingTDs+avgPassingYards+avgOInterceptions)
-    print(pon["QB"])
+    pon['WR1'] = ((decimal.Decimal(OffenseDF.loc[OffenseDF['rosterID']==Starters['WR'][0]].iloc[0]['receivingYards'])/1000)*(40)) \
+                + ((decimal.Decimal(OffenseDF.loc[OffenseDF['rosterID']==Starters['WR'][0]].iloc[0]['receivingTDs'])/6)*(20)) \
+                + ((decimal.Decimal(OffenseDF.loc[OffenseDF['rosterID']==Starters['WR'][0]].iloc[0]['catchPercentage'])/65)*(15)) \
+                + ((decimal.Decimal(OffenseDF.loc[OffenseDF['rosterID']==Starters['WR'][0]].iloc[0]['receptions'])/50)*(15)) \
+                + ((decimal.Decimal(OffenseDF.loc[OffenseDF['rosterID']==Starters['WR'][0]].iloc[0]['passTargets'])/70)*(15))
+    
+    pon['WR2'] = ((decimal.Decimal(OffenseDF.loc[OffenseDF['rosterID']==Starters['WR'][1]].iloc[0]['receivingYards'])/1000)*(40)) \
+                + ((decimal.Decimal(OffenseDF.loc[OffenseDF['rosterID']==Starters['WR'][1]].iloc[0]['receivingTDs'])/6)*(20)) \
+                + ((decimal.Decimal(OffenseDF.loc[OffenseDF['rosterID']==Starters['WR'][1]].iloc[0]['catchPercentage'])/65)*(15)) \
+                + ((decimal.Decimal(OffenseDF.loc[OffenseDF['rosterID']==Starters['WR'][1]].iloc[0]['receptions'])/50)*(15)) \
+                + ((decimal.Decimal(OffenseDF.loc[OffenseDF['rosterID']==Starters['WR'][1]].iloc[0]['passTargets'])/70)*(15))
+
+    pon['WR3'] = ((decimal.Decimal(OffenseDF.loc[OffenseDF['rosterID']==Starters['WR'][2]].iloc[0]['receivingYards'])/1000)*(40)) \
+                + ((decimal.Decimal(OffenseDF.loc[OffenseDF['rosterID']==Starters['WR'][2]].iloc[0]['receivingTDs'])/6)*(20)) \
+                + ((decimal.Decimal(OffenseDF.loc[OffenseDF['rosterID']==Starters['WR'][2]].iloc[0]['catchPercentage'])/65)*(15)) \
+                + ((decimal.Decimal(OffenseDF.loc[OffenseDF['rosterID']==Starters['WR'][2]].iloc[0]['receptions'])/50)*(15)) \
+                + ((decimal.Decimal(OffenseDF.loc[OffenseDF['rosterID']==Starters['WR'][2]].iloc[0]['passTargets'])/70)*(15))
+
+    #Worse then 70 is pon
+    pon['TE'] = ((decimal.Decimal(OffenseDF.loc[OffenseDF['rosterID']==Starters['TE'][0]].iloc[0]['receivingYards'])/500)*(60)) \
+                + ((decimal.Decimal(OffenseDF.loc[OffenseDF['rosterID']==Starters['TE'][0]].iloc[0]['receivingTDs'])/4)*(40))
+
+    pon["OL1"] = (decimal.Decimal(RosterDF.loc[RosterDF['rosterID']==Starters['OL'][0]].iloc[0]['gamesStarted']/17)*(50)) \
+                + ((decimal.Decimal(Team[0]["allowedSacks"]-decimal.Decimal(avgAllowedSacks))/decimal.Decimal(avgAllowedSacks))*(25)) \
+                + (decimal.Decimal(Team[0]["sackPercentage"])/decimal.Decimal(6))*(25)
+
+    pon["OL2"] = (decimal.Decimal(RosterDF.loc[RosterDF['rosterID']==Starters['OL'][1]].iloc[0]['gamesStarted']/17)*(50)) \
+                + ((decimal.Decimal(Team[0]["allowedSacks"]-decimal.Decimal(avgAllowedSacks))/decimal.Decimal(avgAllowedSacks))*(25)) \
+                + (decimal.Decimal(Team[0]["sackPercentage"])/decimal.Decimal(6))*(25)
+    pon["OL3"] = (decimal.Decimal(RosterDF.loc[RosterDF['rosterID']==Starters['OL'][2]].iloc[0]['gamesStarted']/17)*(50)) \
+                + ((decimal.Decimal(Team[0]["allowedSacks"]-decimal.Decimal(avgAllowedSacks))/decimal.Decimal(avgAllowedSacks))*(25)) \
+                + (decimal.Decimal(Team[0]["sackPercentage"])/decimal.Decimal(6))*(25)
+
+    pon["OL4"] = (decimal.Decimal(RosterDF.loc[RosterDF['rosterID']==Starters['OL'][3]].iloc[0]['gamesStarted']/17)*(50)) \
+                + ((decimal.Decimal(Team[0]["allowedSacks"]-decimal.Decimal(avgAllowedSacks))/decimal.Decimal(avgAllowedSacks))*(25)) \
+                + (decimal.Decimal(Team[0]["sackPercentage"])/decimal.Decimal(6))*(25)
+
+    pon["OL5"] = (decimal.Decimal(RosterDF.loc[RosterDF['rosterID']==Starters['OL'][4]].iloc[0]['gamesStarted']/17)*(20)) \
+                + ((decimal.Decimal(Team[0]["allowedSacks"]-decimal.Decimal(avgAllowedSacks))/decimal.Decimal(avgAllowedSacks))*(25)) \
+                + (decimal.Decimal(Team[0]["sackPercentage"])/decimal.Decimal(6))*(25)
+
+    pon["EDGE"] = 1
+
+    pon["DT"] = 1
+
+    pon["LB"] = 1
+
+    pon["CB"] = 1
+
+    pon["S"] = 1
+ 
+    #(Team[0]["passingInterceptions"]+Team[0]["passingYards"]+Team[0]["passingTDs"])/(avgPassingTDs+avgPassingYards+avgOInterceptions)
+    print(pon)
     
     #pon["WR"] = 
     
@@ -138,7 +233,7 @@ def RecommendedPositions(request, acronym):
     DefenseDict = [{'rosterID': output.rosterID_id,'acronym':output.acronym_id,'interceptions': output.interceptions, 'interceptionsYards': output.interceptionsYards, 'interceptionTDs': output.interceptionTDs, 'passDefended': output.passDefended, 'forcedFumbles': output.forcedFumbles, 'fumblesRecovered': output.fumblesRecovered, 'fumbleYards': output.fumbleYards, 'fumbleTDs': output.fumbleTDs, 'sacks': output.sacks, 'combinedTackles': output.combinedTackles, 'soloTackles': output.soloTackles, 'assistedTackles': output.assistedTackles, 'tacklesForLoss': output.tacklesForLoss, 'qbHits': output.qbHits, 'safeties': output.safeties} for output in Defense.objects.filter(acronym__exact=f'{acronym}')]
     #SpecialTeamsDict = [{'rosterID': output.rosterID_id,'acronym':output.acronym_id,'AllFGA': output.AllFGA, 'AllFGM': output.AllFGM, 'twentyFGA': output.twentyFGA, 'twentyFGM': output.twentyFGM, 'thirtyFGA': output.thirtyFGA, 'thirtyFGM': output.thirtyFGM, 'fortyFGA': output.fortyFGA, 'fortyFGM': output.fortyFGM, 'fiftyPlusFGA': output.fiftyPlusFGA, 'fiftyPlusFGM': output.fiftyPlusFGM, 'longestFG': output.longestFG, 'FGPercentage': output.FGPercentage, 'extraPointsAttempted': output.extraPointsAttempted, 'extraPointsMade': output.extraPointsMade, 'kickOffs': output.kickOffs,'kickOffYards': output.kickOffYards , 'kickOffAvg': output.kickOffAvg, 'punts': output.punts, 'puntYards': output.puntYards, 'longestPunt': output.longestPunt, 'blockedPunts': output.blockedPunts } for output in SpecialTeams.objects.filter(acronym__exact=f'{acronym}')]
     
-    output = [{'Team': Team, "Positions of Need": pon}]
+    output = [{"Positions of Need": pon}]
 
     return JsonResponse(output, safe=False)
 
