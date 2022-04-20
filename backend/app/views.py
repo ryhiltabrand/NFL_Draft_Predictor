@@ -105,7 +105,7 @@ def RecommendedPositions(request, acronym):
     #print(Starting_Edge_DF)
     Starters={"QB": Starting_QB,"RB": Starting_RB,"WR": Starting_WR,"TE": Starting_TE,"OL": Starting_OL,"Edge": Starting_Edge,"DT": Starting_DT,"LB": Starting_LB,"CB": Starting_CB,"S": Starting_S,"K": Starting_K,"P": Starting_P}
     
-    print(Starters)
+    #print(Starters)
 
     #print(OffenseDF)
     #print(DefenseDF)
@@ -283,7 +283,7 @@ def RecommendedPositions(request, acronym):
                 + (decimal.Decimal(DefenseDF.loc[DefenseDF['rosterID']==Starters['S'][1]].iloc[0]['tacklesForLoss']/3)*10) 
    
     #(Team[0]["passingInterceptions"]+Team[0]["passingYards"]+Team[0]["passingTDs"])/(avgPassingTDs+avgPassingYards+avgOInterceptions)
-    print(pon)
+    #print(pon)
     
     #pon["WR"] = 
     
@@ -296,5 +296,3 @@ def RecommendedPositions(request, acronym):
 
     return JsonResponse(output, safe=False)
 
-
-    
