@@ -5,18 +5,18 @@ f = open("Prospects.json")
 data = json.load(f)
 df = pd.json_normalize(data)
 QB = df.loc[df['position']=="QB"]
-'''WR = df.loc[df['position']=="WR"]
+WR = df.loc[df['position']=="WR"]
 RB = df.loc[df['position']=="RB"]
 TE = df.loc[df['position']=="TE"]
-OL = df.loc[df['position']=="" & df['position']=="" & df['position']=="" & df['position']==""]
+#OL = df.loc[df['position']=="" & df['position']=="" & df['position']=="" & df['position']==""]
 EDGE = df.loc[df['position']=="EDGE"]
 DT = df.loc[df['position']=="DT"]
 LB = df.loc[df['position']=="LB"]
 CB = df.loc[df['position']=="CB"]
-Safty = df.loc[df['position']=="S"]'''
+S = df.loc[df['position']=="S"]
 
 for index, row in QB.iterrows():
-
+    Tscore = {}
     print(row)
     seventeen  = pd.DataFrame(row["2017"])
     if seventeen.empty == False:
@@ -29,10 +29,17 @@ for index, row in QB.iterrows():
             pAttempts = seventeen.loc[(seventeen.stat_type == "ATT") & (seventeen.category == "passing")].iloc[0]["stat"]
             pYPA = seventeen.loc[(seventeen.stat_type == "YPA") & (seventeen.category == "passing")].iloc[0]["stat"]
             fumbles = seventeen.loc[(seventeen.stat_type == "FUM") & (seventeen.category == "fumbles")].iloc[0]["stat"]
+            if score > 100:
+                score = 100
+            score = (completionPercentage*(20))+((TDs/25)*20)+((pYards/2800)*20)+((pYPA/8)*15)+(((1/(fumbles/pAttempts))/100)*10)+(((1/(INTs/pAttempts))/100)*15)
+            Tscore.append(score)
             #TDtoINT = TDs/INTs
-            print("2017",completionPercentage, TDs, INTs, pYards, pAttempts, pYPA, fumbles)
+            Tscore["2017"] = ((score/100)*2.5)
         except Exception as e:
+            Tscore["2017"] =(0)
             print(e)
+    else:
+        Tscore["2017"] =(0)
     eightteen = pd.DataFrame(row["2018"])
     if eightteen.empty == False:
         try:
@@ -44,11 +51,17 @@ for index, row in QB.iterrows():
             pAttempts = eightteen.loc[(eightteen.stat_type == "ATT") & (eightteen.category == "passing")].iloc[0]["stat"]
             pYPA = eightteen.loc[(eightteen.stat_type == "YPA") & (eightteen.category == "passing")].iloc[0]["stat"]
             fumbles = eightteen.loc[(eightteen.stat_type == "FUM") & (eightteen.category == "fumbles")].iloc[0]["stat"]
+            score = (completionPercentage*(20))+((TDs/25)*20)+((pYards/2800)*20)+((pYPA/8)*15)+(((1/(fumbles/pAttempts))/100)*10)+(((1/(INTs/pAttempts))/100)*15)
             #TDtoINT = TDs/INTs
-            print("2018",completionPercentage, TDs, INTs, pYards, pAttempts, pYPA, fumbles)
+            print("2018",score)
+            if score > 100:
+                score = 100
+            Tscore["2018"] =((score/100)*2.5)
         except Exception as e:
             print(e)
-
+            Tscore["2018"] =(0)
+    else:
+        Tscore["2018"] =(0)
     nineteen = pd.DataFrame(row["2019"])
     if nineteen.empty == False:
         try:
@@ -60,10 +73,17 @@ for index, row in QB.iterrows():
             pAttempts = nineteen.loc[(nineteen.stat_type == "ATT") & (nineteen.category == "passing")].iloc[0]["stat"]
             pYPA = nineteen.loc[(nineteen.stat_type == "YPA") & (nineteen.category == "passing")].iloc[0]["stat"]
             fumbles = nineteen.loc[(nineteen.stat_type == "FUM") & (nineteen.category == "fumbles")].iloc[0]["stat"]
+            score = (completionPercentage*(20))+((TDs/25)*20)+((pYards/2800)*20)+((pYPA/8)*15)+(((1/(fumbles/pAttempts))/100)*10)+(((1/(INTs/pAttempts))/100)*15)
             #TDtoINT = TDs/INTs
-            print("2019",completionPercentage, TDs, INTs, pYards, pAttempts, pYPA, fumbles)
+            print("2019",score)
+            if score > 100:
+                score = 100
+            Tscore["2019"] =((score/100)*10)
         except Exception as e:
+            Tscore["2019"] =(0)
             print(e)
+    else:
+         Tscore["2019"] =(0)
     twenety = pd.DataFrame(row["2020"])
     if twenety.empty == False:
         try:
@@ -75,10 +95,17 @@ for index, row in QB.iterrows():
             pAttempts = twenety.loc[(twenety.stat_type == "ATT") & (twenety.category == "passing")].iloc[0]["stat"]
             pYPA = twenety.loc[(twenety.stat_type == "YPA") & (twenety.category == "passing")].iloc[0]["stat"]
             fumbles = twenety.loc[(twenety.stat_type == "FUM") & (twenety.category == "fumbles")].iloc[0]["stat"]
+            score = (completionPercentage*(20))+((TDs/25)*20)+((pYards/2800)*20)+((pYPA/8)*15)+(((1/(fumbles/pAttempts))/100)*10)+(((1/(INTs/pAttempts))/100)*15)
             #TDtoINT = TDs/INTs
-            print("2020",completionPercentage, TDs, INTs, pYards, pAttempts, pYPA, fumbles)
+            print("2020",score)
+            if score > 100:
+                score = 100
+            Tscore["2020"] =((score/100)*15)
         except Exception as e:
+            Tscore["2020"] =(0)
             print(e)
+    else:
+        Tscore["2020"] =(0)
     twentyone = pd.DataFrame(row["2021"])
     if twentyone.empty == False:
         #print(twentyone)
@@ -90,12 +117,22 @@ for index, row in QB.iterrows():
             pYards = twentyone.loc[(twentyone.stat_type == "YDS") & (twentyone.category == "passing")].iloc[0]["stat"]
             pAttempts = twentyone.loc[(twentyone.stat_type == "ATT") & (twentyone.category == "passing")].iloc[0]["stat"]
             pYPA = twentyone.loc[(twentyone.stat_type == "YPA") & (twentyone.category == "passing")].iloc[0]["stat"]
-            #fumbles = twentyone.loc[(twentyone.stat_type == "FUM") & (twentyone.category == "fumbles")].iloc[0]["stat"]
+            fumbles = twentyone.loc[(twentyone.stat_type == "FUM") & (twentyone.category == "fumbles")].iloc[0]["stat"]
+            score = (completionPercentage*(30))+((TDs/25)*15)+((pYards/2800)*15)+((pYPA/8)*10)+(((1/(fumbles/pAttempts))/100)*10)+(((1/(INTs/pAttempts))/100)*20)
             #TDtoINT = TDs/INTs
-            print("2021",completionPercentage, TDs, INTs, pYards, pAttempts, pYPA)
+            print("2021",score)
+            if score > 100:
+                score = 100
+
+            Tscore["2021"] =((score/100)*70)
         except Exception as e:
+            Tscore["2021"] =(0)
             print(e)
-                
+    else:
+        Tscore["2021"] =(0)
+
+    
+    print(Tscore, sum(Tscore.values()))        
 
     
     #exp = [seventeen.empty, eightteen.empty, nineteen.empty, twenety.empty, twentyone.empty].count(False)
