@@ -32,5 +32,7 @@ urlpatterns = [
     path('api/',include(router.urls)),
     path('data/<acronym>/', AllTeamData, name="AllTeamData"),
     path('pon/<acronym>/', RecommendedPositions, name="Positions of Need"),
+    path('draft/<acronym>/<id>/<pick>', draftPlayer, name="Draft"),
+    path('rec/<acronym>', playerRec, name="Rec")
 ]
 
