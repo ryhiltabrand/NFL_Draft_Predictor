@@ -37,6 +37,11 @@ class CollegePlayersSerializer(serializers.ModelSerializer):
         model = CollegePlayers
         fields = "__all__"
         #fields = ['playerid', 'name', 'firstname', 'lastname', 'college', 'weight', 'height', 'position', 'athleteGrade', 'postionGrade']
+class DraftSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Drafted
+        fields = "__all__"
+        #fields = ['playerid', 'name', 'firstname', 'lastname', 'college', 'weight', 'height', 'position', 'athleteGrade', 'postionGrade']
 class DraftHistorySerializer(serializers.ModelSerializer):
     class Meta:
         model = DraftHistory

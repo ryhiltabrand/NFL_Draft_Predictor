@@ -24,6 +24,8 @@ router.register(r'Roster', RosterViewSet, 'Roster')
 router.register(r'Offense', OffenseViewSet, 'Offense')
 router.register(r'Defense', DefenseViewSet, 'Defesne')
 router.register(r'ST', SpecialTeamsViewSet, 'SpecialTeams')
+router.register(r'College', CollegeViewSet, 'College')
+router.register(r'Drafted', DraftedViewSet, 'Drafted')
 
 urlpatterns = [
     path('admin/', admin.site.urls),

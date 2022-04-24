@@ -108,7 +108,7 @@ class SpecialTeams(models.Model):
     blockedPunts = models.IntegerField(null=True)
 
 class CollegePlayers(models.Model):
-    playeid = models.IntegerField(primary_key=True)
+    playerid = models.IntegerField(primary_key=True)
     name = models.CharField(max_length=100)
     firstName = models.CharField(max_length=50)
     lastName = models.CharField(max_length=50)
@@ -130,3 +130,17 @@ class DraftHistory(models.Model):
     athleteGrade = models.DecimalField(blank=True, max_digits=5, decimal_places=2)
     positionGrade = models.DecimalField(blank=True, max_digits=5, decimal_places=2)
 
+class Drafted(models.Model):
+    playerid = models.IntegerField(primary_key=True)
+    name = models.CharField(max_length=100)
+    firstName = models.CharField(max_length=50)
+    lastName = models.CharField(max_length=50)
+    college = models.CharField(max_length=100)
+    weight = models.IntegerField()
+    height = models.IntegerField()
+    position = models.CharField(max_length=5)
+    athleteGrade = models.DecimalField(blank=True, max_digits=5, decimal_places=2)
+    positionGrade = models.DecimalField(blank=True, max_digits=5, decimal_places=2)
+    team = models.CharField(max_length=3)
+    drafted = models.BooleanField()
+    pick = models.IntegerField(default=0)

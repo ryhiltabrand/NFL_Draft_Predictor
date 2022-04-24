@@ -45,6 +45,14 @@ class SpecialTeamsViewSet(viewsets.ModelViewSet):
     queryset = SpecialTeams.objects.all()
     serializer_class = SpecialTeamsSerializer
 
+class CollegeViewSet(viewsets.ModelViewSet):
+    queryset = CollegePlayers.objects.all()
+    serializer_class = CollegePlayersSerializer
+
+class DraftedViewSet(viewsets.ModelViewSet):
+    queryset = Drafted.objects.all()
+    serializer_class = DraftSerializer
+
 def AllTeamData(request, acronym):
     #team = Teams.objects.filter(acronym__exact=f'{acronym}')
     #serializer_class = TeamSerializer
