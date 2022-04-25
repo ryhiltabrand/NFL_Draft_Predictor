@@ -35,9 +35,6 @@ function LandingPage() {
                     <div className="stats-row">
                         <TeamStats team={team}/>
                     </div>
-                    <div className="stats-row">
-                        <PlayerStats team={team}/>
-                    </div>
                 </div>
                 <div className="recommended-players side-by-side">
                     <RecommendedPlayers team={team}/>
