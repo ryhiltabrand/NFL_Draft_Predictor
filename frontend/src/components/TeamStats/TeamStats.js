@@ -12,7 +12,9 @@ function TeamStats(props) {
     const [loaded, setLoaded] = useState(false);
 
     useEffect(() => {
-        axios.get(`http://${host}:${port}/data/${team.acryonm}`).then((res) => {
+        //axios.get(`http://127.0.0.1:8000/api/Team/?format=json`).then((res) => {
+        axios.get(`http://${host}:${port}/data/${team.acryonm}/`).then((res) => {
+        
             console.log(res)
             setStats(res.data)
             setLoaded(true);
