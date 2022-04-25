@@ -18,6 +18,8 @@ import decimal
 from django.shortcuts import (get_object_or_404,
                               render,
                               HttpResponseRedirect)
+
+
 import operator
 import numpy as np
 
@@ -325,7 +327,7 @@ def draftPlayer(request, acronym, id, pick):
     player = Drafted.objects.filter(playerid=id).update(team = acronym)
     player = Drafted.objects.filter(playerid=id).update(pick = int(pick))
     
-    return HttpResponse("<h1> Drafted </h1>")
+    return HttpResponse("")
 
 
 def pon(acronym):
