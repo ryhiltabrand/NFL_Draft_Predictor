@@ -14,8 +14,6 @@ function TeamStats(props) {
     useEffect(() => {
         //axios.get(`http://127.0.0.1:8000/api/Team/?format=json`).then((res) => {
         axios.get(`http://${host}:${port}/data/${team.acryonm}/`).then((res) => {
-        
-            console.log(res)
             setStats(res.data)
             setLoaded(true);
             
@@ -28,7 +26,7 @@ function TeamStats(props) {
             {
                 loaded ? stats.map((stat) =>
                 <div>
-                    {stat}
+                    
                     {console.log(stat)}
                 </div>
                 ): ""
