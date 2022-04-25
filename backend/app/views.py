@@ -18,6 +18,7 @@ import decimal
 from django.shortcuts import (get_object_or_404,
                               render,
                               HttpResponseRedirect)
+from django.views.decorators.csrf import csrf_exempt
 
 
 import operator
@@ -320,7 +321,7 @@ def RecommendedPositions(request, acronym):
 
     return JsonResponse(output, safe=False)
 
-
+@csrf_exempt
 def draftPlayer(request, acronym, id, pick):
 
     player = Drafted.objects.filter(playerid=id).update(drafted = True)
