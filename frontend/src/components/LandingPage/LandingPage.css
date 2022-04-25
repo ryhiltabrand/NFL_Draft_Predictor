@@ -1,0 +1,39 @@
+.landing-page {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+.side-by-side {
+    display: inline-block;
+}
+
+.team-picks-menu {
+    height: 20%;
+}
+
+.middle {
+    height: 40%;
+}
+
+.list-of-players {
+    height: 40%;
+}
+
+.stats {
+    height: 40%;
+    width: 60%;
+}
+
+.stats-row {
+    width: 100%;
+    height: 50%;
+}
+
+.positions-needed {
+    height: 100%;
+}
+
+.recommended-players {
+    height: 100%;
+}
