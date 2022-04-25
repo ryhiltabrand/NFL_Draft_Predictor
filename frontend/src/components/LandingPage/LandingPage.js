@@ -9,31 +9,40 @@ import draft from "../../data/draft.json"
 import axios from "axios"
 import { useEffect, useState } from "react";
 
-
 function LandingPage() {
+
+    var [team, setTeam] = useState({});
+
+    useEffect(() => {
+        const teams = Object.values(draft);
+        const randTeam = teams[parseInt(Math.random() * teams.length)]
+        setTeam(randTeam);
+        console.log(randTeam)
+    }, []);
+
     return (
         <div className="landing-page">
             <div className="team-picks-menu">
-                <TeamPicksMenu/>
+                <TeamPicksMenu team={team}/>
             </div>
             <div className="middle">
                 <div className="positions-needed side-by-side">
-                    <PositionsNeeded/>
+                    <PositionsNeeded team={team}/>
                 </div>
                 <div className="stats side-by-side">
                     <div className="stats-row">
-                        <TeamStats/>
+                        <TeamStats team={team}/>
                     </div>
                     <div className="stats-row">
-                        <PlayerStats />
+                        <PlayerStats team={team}/>
                     </div>
                 </div>
                 <div className="recommended-players side-by-side">
-                    <RecommendedPlayers />
+                    <RecommendedPlayers team={team}/>
                 </div>
             </div>
             <div className="list-of-players">
-                <ListOfPlayers />
+                <ListOfPlayers team={team}/>
             </div>
         </div>
     );
