@@ -15,9 +15,7 @@ function LandingPage() {
     var [loaded, setLoaded] = useState(false);
 
     useEffect(() => {
-        const teams = Object.values(draft);
-        const randTeam = teams[parseInt(Math.random() * teams.length)]
-        setTeam(randTeam);
+        setTeam(draft[0]);
         setLoaded(true);
         
     }, []);
