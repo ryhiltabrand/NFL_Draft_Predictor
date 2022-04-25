@@ -24,11 +24,15 @@ router.register(r'Roster', RosterViewSet, 'Roster')
 router.register(r'Offense', OffenseViewSet, 'Offense')
 router.register(r'Defense', DefenseViewSet, 'Defesne')
 router.register(r'ST', SpecialTeamsViewSet, 'SpecialTeams')
+router.register(r'College', CollegeViewSet, 'College')
+router.register(r'Drafted', DraftedViewSet, 'Drafted')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/',include(router.urls)),
     path('data/<acronym>/', AllTeamData, name="AllTeamData"),
     path('pon/<acronym>/', RecommendedPositions, name="Positions of Need"),
+    path('draft/<acronym>/<id>/<pick>', draftPlayer, name="Draft"),
+    path('rec/<acronym>', playerRec, name="Rec")
 ]
 
