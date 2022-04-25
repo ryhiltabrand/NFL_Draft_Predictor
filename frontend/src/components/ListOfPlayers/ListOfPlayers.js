@@ -43,7 +43,8 @@ function ListOfPlayers(props) {
                             remove(player,team);
                             setDraftees(draftees.filter((item)=>item.playerid!==player.playerid))
                             setIncrement(increment+1)
-                            setTeam(draft[increment])
+                            console.log(increment)
+                            setTeam(draft[increment+1])
                             }}
                         >
                             DRAFT
