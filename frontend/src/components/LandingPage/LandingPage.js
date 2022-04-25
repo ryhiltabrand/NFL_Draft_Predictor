@@ -5,10 +5,13 @@ import RecommendedPlayers from "../RecommendedPlayers/RecommendedPlayers";
 import TeamPicksMenu from "../TeamPicksMenu/TeamPicksMenu";
 import TeamStats from "../TeamStats/TeamStats";
 import "./LandingPage.css";
+<<<<<<< HEAD
 import draft from "../../data/draft.json"
 import axios from "axios"
 import { useEffect, useState } from "react";
 
+=======
+>>>>>>> 992972eebfbd22ca8f55cb53fb133216c1135dfc
 
 function LandingPage() {
     return (
