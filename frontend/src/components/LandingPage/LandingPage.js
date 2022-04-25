@@ -12,16 +12,18 @@ import { useEffect, useState } from "react";
 function LandingPage() {
 
     var [team, setTeam] = useState({});
+    var [loaded, setLoaded] = useState(false);
 
     useEffect(() => {
-        const teams = Object.values(draft);
-        const randTeam = teams[parseInt(Math.random() * teams.length)]
-        setTeam(randTeam);
-        console.log(randTeam)
+        setTeam(draft[0]);
+        setLoaded(true);
+        
     }, []);
 
     return (
-        <div className="landing-page">
+        <>
+
+       { loaded ? <div className="landing-page">
             <div className="team-picks-menu">
                 <TeamPicksMenu team={team}/>
             </div>
@@ -44,7 +46,8 @@ function LandingPage() {
             <div className="list-of-players">
                 <ListOfPlayers team={team}/>
             </div>
-        </div>
+        </div> : ""}
+        </>
     );
 }
 
