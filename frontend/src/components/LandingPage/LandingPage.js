@@ -13,20 +13,13 @@ function LandingPage() {
 
     var [team, setTeam] = useState({});
     var [loaded, setLoaded] = useState(false);
-    const [players, setPlayers] = useState([]);
 
-    var teamIndex = 0;
-    const host = window.location.hostname;
-    const port = 8000;
-
-    useEffect(() => { 
-        setTeam(draft[teamIndex]);
-        setLoaded(true)
-
-        axios.get(`http://${host}:${port}/rec/${team.acryonm}`).then((res) => {
-            setPlayers(res.data)
-            setLoaded(true);
-        })
+    useEffect(() => {
+        const teams = Object.values(draft);
+        const randTeam = teams[parseInt(Math.random() * teams.length)]
+        setTeam(randTeam);
+        setLoaded(true);
+        
     }, []);
 
     return (
@@ -49,7 +42,7 @@ function LandingPage() {
                     </div>
                 </div>
                 <div className="recommended-players side-by-side">
-                    <RecommendedPlayers players={players}/>
+                    <RecommendedPlayers team={team}/>
                 </div>
             </div>
             <div className="list-of-players">
