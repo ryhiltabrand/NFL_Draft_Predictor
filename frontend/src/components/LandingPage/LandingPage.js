@@ -5,11 +5,10 @@ import RecommendedPlayers from "../RecommendedPlayers/RecommendedPlayers";
 import TeamPicksMenu from "../TeamPicksMenu/TeamPicksMenu";
 import TeamStats from "../TeamStats/TeamStats";
 import "./LandingPage.css";
-import draft from "../data/draft.json"
+import draft from "../../data/draft.json"
 import axios from "axios"
 import { useEffect, useState } from "react";
 
-var [team, setTeam] = useState({})
 
 function LandingPage() {
     return (
