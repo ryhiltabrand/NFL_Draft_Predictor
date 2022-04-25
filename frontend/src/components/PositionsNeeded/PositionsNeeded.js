@@ -11,15 +11,24 @@ function PositionsNeeded(props) {
     const [loaded, setLoaded] = useState(false);
 
     useEffect(() => {
-        axios.get(`http://${host}:${port}/pon/${team.acryonm}`).then((res) => {
+        axios.get(`http://${host}:${port}/pon/${team.acryonm}/`).then((res) => {
             console.log(res.data)
-            setPositionsOfNeed(res.data)
+            setPositionsOfNeed(res.data["Positions of Need"])
             setLoaded(true);
         })
     }, []);
 
     return (
-        <></>
+        <div>
+        Positions of Need
+        {
+            loaded ? positionsOfNeed.map((position) =>
+                <div>
+                    {position}
+                </div>
+            ) : ""
+        }
+    </div>
     );
 }
 

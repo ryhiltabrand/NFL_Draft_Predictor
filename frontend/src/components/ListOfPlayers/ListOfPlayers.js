@@ -31,7 +31,7 @@ function ListOfPlayers(props) {
         axios.get(`http://${host}:${port}/api/Drafted/?format=json`).then((res)=>{
                 setData(res.data)
         })
-    })
+    }, [])
 
     return (
         <List sx={{
