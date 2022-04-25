@@ -26,7 +26,7 @@ function TeamStats(props) {
                 loaded ? stats.map((stat) =>
                     <div class="flexbox-container">
                         Team stats:
-                        <div>{console.log(stat["Team"][0])} Team: {stat["Team"][0]['name']}</div>
+                        <div>Team: {stat["Team"][0]['name']}</div>
                         <div> Wins: {stat["Team"][0]['wins']} </div>
                         <div>Losses: {stat["Team"][0]['losses']} </div>
                         <div>Points For: {stat["Team"][0]['pointsFor']} </div>
