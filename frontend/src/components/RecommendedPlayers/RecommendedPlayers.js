@@ -15,9 +15,9 @@ function RecommendedPlayers(props) {
         axios.get(`http://${host}:${port}/rec/${team.acryonm}`).then((res) => {
             setPlayers(res.data)
             setLoaded(true);
-            console.log(true)
         })
     }, []);
+
 
     return (
         <div>
