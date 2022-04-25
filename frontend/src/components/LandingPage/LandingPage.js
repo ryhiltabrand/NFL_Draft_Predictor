@@ -13,10 +13,17 @@ function LandingPage() {
 
     var [team, setTeam] = useState({});
     var [loaded, setLoaded] = useState(false);
+    var [draftees, setDraftees] = useState([]);
+    const host = window.location.hostname;
+    const port = 8000;
+    var [increment, setIncrement] = useState(0)
 
     useEffect(() => {
-        setTeam(draft[0]);
+        setTeam(draft[increment]);
         setLoaded(true);
+        axios.get(`http://${host}:${port}/api/Drafted/?format=json`).then((res)=>{
+                setDraftees(res.data);
+            })
         
     }, []);
 
@@ -41,7 +48,8 @@ function LandingPage() {
                 </div>
             </div>
             <div className="list-of-players">
-                <ListOfPlayers team={team}/>
+                <ListOfPlayers team={team} draftees={draftees} setDraftees={setDraftees}
+                setTeam={setTeam} increment={increment} setIncrement={setIncrement}/>
             </div>
         </div> : ""}
         </>

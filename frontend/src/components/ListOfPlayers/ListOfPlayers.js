@@ -9,6 +9,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import Button from '@mui/material/Button';
 import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
+import draft from "../../data/draft.json"
 
 function remove(player,team){
     const host = window.location.hostname;
@@ -19,20 +20,11 @@ function remove(player,team){
         pick: team.id,
     }
     axios.post(`http://${host}:${port}/draft/${play.team}/${play.playerid}/${play.pick}`).then(res =>console.log(res.data));
-    
+
 }
 
 function ListOfPlayers(props) {
-    var team =props.team;
-    const host = window.location.hostname;
-    const port = 8000;
-    const [data, setData] = useState([]);
-    useEffect(()=>{
-        axios.get(`http://${host}:${port}/api/Drafted/?format=json`).then((res)=>{
-                setData(res.data)
-        })
-    })
-
+    const {team, draftees, setDraftees, setTeam, increment, setIncrement} = props;
     return (
         <List sx={{
             width: 1,
@@ -41,15 +33,18 @@ function ListOfPlayers(props) {
             overflow: 'auto',
             maxHeight: 300,
             '& ul': { padding: 0 },
-          }} list>
-        {data.map((player)=>(
+          }}>
+        {draftees.map((player)=>( 
                 <ListItem
                     key={player.playerId}
                     secondaryAction={
                         <Button variant="text"
-                            onClick={()=>
-                            remove(player,team)
-                            }
+                            onClick={()=>{
+                            remove(player,team);
+                            setDraftees(draftees.filter((item)=>item.playerid!==player.playerid))
+                            setIncrement(increment+1)
+                            setTeam(draft[increment])
+                            }}
                         >
                             DRAFT
                         </Button>
